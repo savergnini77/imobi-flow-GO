@@ -1,0 +1,17 @@
+# Build e dependências
+node_modules
+.next
+out
+build
+coverage
+
+# Lockfiles
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Arquivos gerados
+next-env.d.ts
+
+# Supabase (migrações SQL geradas)
+supabase/migrations
