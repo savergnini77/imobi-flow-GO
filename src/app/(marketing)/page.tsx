@@ -15,6 +15,7 @@ import {
   UsersIcon,
 } from "@/components/shared/icons";
 import { ButtonLink } from "@/components/ui/button";
+import { type FeatureKey, isAvailable } from "@/config/features";
 import { formatBRL, PLANS } from "@/config/plans";
 import { SITE } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
@@ -75,45 +76,53 @@ const STEPS = [
   },
 ];
 
-const FEATURES = [
+const FEATURE_CARDS: { icon: ReactNode; title: string; text: string; feature: FeatureKey }[] = [
   {
     icon: <UsersIcon />,
     title: "Contatos com histórico completo",
+    feature: "contacts",
     text: "Ligações, mensagens, visitas e observações em uma linha do tempo única por cliente.",
   },
   {
     icon: <FunnelIcon />,
     title: "Funil de vendas em kanban",
+    feature: "pipeline",
     text: "Arraste o negócio entre etapas e veja na hora onde cada oportunidade está parada.",
   },
   {
     icon: <ChatIcon />,
     title: "WhatsApp em um clique",
+    feature: "whatsapp",
     text: "Mensagens prontas para cada situação, e o contato fica registrado no histórico.",
   },
   {
     icon: <KeyIcon />,
     title: "Imóveis com fotos e captação",
+    feature: "properties",
     text: "Cadastro completo, proprietários, comissão e status de publicação.",
   },
   {
     icon: <ExternalIcon />,
     title: "Página do imóvel que gera lead",
+    feature: "propertyPage",
     text: "Compartilhe o link do imóvel: quem se interessar vira contato direto no seu funil.",
   },
   {
     icon: <CalendarIcon />,
     title: "Agenda de visitas e tarefas",
+    feature: "agenda",
     text: "Visitas, retornos e follow-ups com lembrete para o corretor responsável.",
   },
   {
     icon: <BuildingIcon />,
     title: "Filiais e equipes",
+    feature: "locations",
     text: "Organize a operação por escritório e equipe, com o gestor enxergando tudo.",
   },
   {
     icon: <TeamIcon />,
     title: "Permissões por papel",
+    feature: "permissions",
     text: "Proprietário, gerente, corretor e assistente veem só o que precisam ver.",
   },
 ];
@@ -140,7 +149,9 @@ const FAQ = [
   },
   {
     q: "Consigo trazer os contatos da minha planilha?",
-    a: "Sim. A importação aceita a planilha que você já usa (CSV/Excel) e organiza os contatos automaticamente.",
+    a: isAvailable("import")
+      ? "Sim. A importação aceita a planilha que você já usa (CSV/Excel) e organiza os contatos automaticamente."
+      : "Sim. A importação da planilha que você já usa (CSV/Excel) está em desenvolvimento e chega junto com o módulo de contatos.",
   },
   {
     q: "Funciona no celular?",
@@ -285,9 +296,12 @@ export default function LandingPage() {
         title="Tudo o que a imobiliária precisa para vender e alugar"
       >
         <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((feature) => (
+          {FEATURE_CARDS.map((feature) => (
             <div key={feature.title}>
-              <IconBadge>{feature.icon}</IconBadge>
+              <div className="flex items-center gap-3">
+                <IconBadge>{feature.icon}</IconBadge>
+                {!isAvailable(feature.feature) && <SoonBadge />}
+              </div>
               <h3 className="mt-4 font-semibold">{feature.title}</h3>
               <p className="text-muted-foreground mt-1.5 text-sm">{feature.text}</p>
             </div>
@@ -343,9 +357,14 @@ export default function LandingPage() {
               </p>
               <ul className="mt-6 flex-1 space-y-2.5 text-sm">
                 {plan.highlights.map((item) => (
-                  <li key={item} className="flex gap-2">
+                  <li key={item.text} className="flex gap-2">
                     <CheckIcon className="text-primary size-4 shrink-0 translate-y-0.5" />
-                    {item}
+                    <span>
+                      {item.text}
+                      {item.feature && !isAvailable(item.feature) && (
+                        <SoonBadge className="ml-2 align-middle" />
+                      )}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -457,6 +476,20 @@ function Section({
         {children}
       </div>
     </section>
+  );
+}
+
+/** Recurso anunciado que ainda não foi entregue (ver src/config/features.ts). */
+function SoonBadge({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        "bg-warning-soft text-warning-foreground inline-block rounded-full px-2 py-0.5 text-[11px] font-semibold",
+        className,
+      )}
+    >
+      Em breve
+    </span>
   );
 }
 

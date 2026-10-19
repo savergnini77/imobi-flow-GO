@@ -3,7 +3,15 @@
 //
 // ATENÇÃO: valores de lançamento PROPOSTOS, ainda a validar com o negócio.
 
+import type { FeatureKey } from "@/config/features";
+
 export type PlanId = "starter" | "pro" | "business";
+
+export type PlanHighlight = {
+  text: string;
+  /** Recurso de que o item depende; enquanto indisponível, aparece "Em breve". */
+  feature?: FeatureKey;
+};
 
 export type Plan = {
   id: PlanId;
@@ -13,7 +21,7 @@ export type Plan = {
   audience: string;
   /** Limite de usuários ativos na imobiliária. */
   maxUsers: number;
-  highlights: string[];
+  highlights: PlanHighlight[];
   featured?: boolean;
 };
 
@@ -25,10 +33,10 @@ export const PLANS: Plan[] = [
     audience: "Para o corretor autônomo e equipes pequenas",
     maxUsers: 3,
     highlights: [
-      "Até 3 usuários",
-      "Contatos, funil e imóveis ilimitados",
-      "WhatsApp em um clique",
-      "Agenda de visitas e tarefas",
+      { text: "Até 3 usuários" },
+      { text: "Contatos, funil e imóveis ilimitados", feature: "contacts" },
+      { text: "WhatsApp em um clique", feature: "whatsapp" },
+      { text: "Agenda de visitas e tarefas", feature: "agenda" },
     ],
   },
   {
@@ -39,11 +47,11 @@ export const PLANS: Plan[] = [
     maxUsers: 10,
     featured: true,
     highlights: [
-      "Até 10 usuários",
-      "Tudo do Starter",
-      "Equipes, filiais e permissões",
-      "Página do imóvel que gera lead",
-      "Painel de desempenho da equipe",
+      { text: "Até 10 usuários" },
+      { text: "Tudo do Starter" },
+      { text: "Filiais, equipes e permissões" },
+      { text: "Página do imóvel que gera lead", feature: "propertyPage" },
+      { text: "Painel de desempenho da equipe", feature: "dashboard" },
     ],
   },
   {
@@ -53,11 +61,11 @@ export const PLANS: Plan[] = [
     audience: "Para operações com várias filiais",
     maxUsers: 30,
     highlights: [
-      "Até 30 usuários",
-      "Tudo do Pro",
-      "Distribuição automática de leads",
-      "Relatórios gerenciais",
-      "Suporte prioritário",
+      { text: "Até 30 usuários" },
+      { text: "Tudo do Pro" },
+      { text: "Distribuição automática de leads", feature: "leadDistribution" },
+      { text: "Relatórios gerenciais", feature: "reports" },
+      { text: "Suporte prioritário" },
     ],
   },
 ];
