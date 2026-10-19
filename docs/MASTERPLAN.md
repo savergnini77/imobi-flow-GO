@@ -1,11 +1,13 @@
 # Masterplan — Imobi Flow GO
 
-> **Status (out/2026):** Sprint 1 do Release 1 entregue. As falhas 1–12 do
-> diagnóstico foram corrigidas (migrations 0003–0005, 39 testes pgTAP). Auth,
-> onboarding, convites (aceite), casca do app, filiais, perfil, dados da
-> imobiliária e landing page estão prontos.
-> **Pendências do S1:** aplicar as migrations no projeto Supabase de nuvem,
-> gerar `src/types/database.ts` e criar os testes E2E (Playwright).
+> **Status (19/out/2026):** Sprint 1 do Release 1 entregue e no ar no projeto
+> Supabase `imobi-flow-go` (São Paulo). Migrations 0001–0007 aplicadas; 41 + 22
+> testes pgTAP passando no banco real; Security Advisor sem pendências reais.
+> Auth, onboarding, convites (aceite), casca do app, filiais, perfil, dados da
+> imobiliária e landing (com selos "Em breve" via `src/config/features.ts`).
+> **Pendências do S1:** teste ponta a ponta de cadastro no navegador (depende da
+> configuração de URL/SMTP no painel do Supabase), testes E2E (Playwright) e
+> ligar `src/types/database.ts` aos clientes Supabase.
 > **Próximo:** Sprint 2 — membros, envio de convites por e-mail, equipes e papéis.
 
 ## Contexto

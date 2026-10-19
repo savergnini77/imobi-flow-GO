@@ -38,9 +38,21 @@ npm run dev                     # http://localhost:3000
 
 - E-mails locais (confirmação, recuperação de senha) chegam no Mailpit:
   <http://localhost:54324>.
-- Usando um projeto Supabase na nuvem: aplique `supabase/migrations/*` em ordem
-  e depois `supabase/seed.sql`; em Authentication > URL Configuration, adicione
-  `<APP_URL>/auth/callback` às Redirect URLs.
+### Supabase na nuvem
+
+Projeto de desenvolvimento: `imobi-flow-go` (ref `rusnbgopnpgsjttzmpal`, região
+São Paulo). Migrations 0001–0007 e seed já aplicados.
+
+Para um projeto novo: aplique `supabase/migrations/*` em ordem e depois
+`supabase/seed.sql`. No painel, em **Authentication > URL Configuration**:
+
+- **Site URL:** a URL pública do app (ex.: `https://app.seudominio.com.br`).
+- **Redirect URLs:** `http://localhost:3000/auth/callback**` e
+  `<APP_URL>/auth/callback**`. O `**` é obrigatório porque o app envia
+  `?next=...` nos links de e-mail.
+- **E-mails:** o SMTP padrão do Supabase só entrega para membros da organização
+  e tem limite baixo por hora. Para testar com qualquer e-mail, configure um
+  SMTP próprio (ex.: Resend) em Authentication > SMTP Settings.
 
 ## Scripts
 
