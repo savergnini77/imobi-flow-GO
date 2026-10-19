@@ -1,26 +1,125 @@
 @import "tailwindcss";
 
+/*
+ * Tokens de design do Imobi Flow GO.
+ * Identidade: azul-marinho (confiança) + verde-esmeralda (crescimento/ação).
+ * Ao alinhar com o arquivo do Claude Design, ajuste SÓ estes valores:
+ * todos os componentes usam os tokens (bg-primary, text-muted-foreground…).
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f7f9;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --muted: #eef1f5;
+  --muted-foreground: #5b6476;
+  --border: #e2e6ec;
+  --input: #cfd5de;
+  --primary: #047857;
+  --primary-hover: #065f46;
+  --primary-foreground: #ffffff;
+  --accent: #e7f6f0;
+  --accent-foreground: #065f46;
+  --sidebar: #0b1324;
+  --sidebar-foreground: #c9d2e3;
+  --sidebar-active: #16233d;
+  --danger: #c2410c;
+  --danger-hover: #9a3412;
+  --danger-soft: #fff1e8;
+  --warning-soft: #fef6e0;
+  --warning-foreground: #8a5a00;
+  --ring: #10b981;
+  --overlay: rgb(15 23 42 / 0.45);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0f1a;
+    --foreground: #e7ebf3;
+    --surface: #111827;
+    --surface-raised: #172033;
+    --muted: #1a2335;
+    --muted-foreground: #95a0b5;
+    --border: #243049;
+    --input: #33415e;
+    --primary: #10b981;
+    --primary-hover: #34d399;
+    --primary-foreground: #04231a;
+    --accent: #0f2e25;
+    --accent-foreground: #6ee7b7;
+    --sidebar: #070b14;
+    --sidebar-foreground: #a9b4c9;
+    --sidebar-active: #131d31;
+    --danger: #f97316;
+    --danger-hover: #fb923c;
+    --danger-soft: #2e1608;
+    --warning-soft: #2b2108;
+    --warning-foreground: #f4c95d;
+    --ring: #34d399;
+    --overlay: rgb(0 0 0 / 0.6);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-danger: var(--danger);
+  --color-danger-hover: var(--danger-hover);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Diálogos nativos: fundo escurecido e sem scroll da página por trás. */
+dialog::backdrop {
+  background: var(--overlay);
+}
+
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog[data-variant="sheet"][open] {
+    animation: sheet-in 180ms ease-out;
+  }
+  dialog[data-variant="modal"][open] {
+    animation: modal-in 140ms ease-out;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+
+@keyframes modal-in {
+  from {
+    transform: translateY(6px) scale(0.98);
+    opacity: 0;
+  }
 }

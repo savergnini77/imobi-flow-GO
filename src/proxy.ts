@@ -1,8 +1,8 @@
 /**
  * Proxy do Next.js 16 (antes chamado de "middleware").
  *
- * Única função: manter a sessão do Supabase atualizada em cada requisição.
- * Não protege rotas, não redireciona e não bloqueia nada nesta etapa.
+ * Mantém a sessão do Supabase atualizada e faz o redirecionamento otimista
+ * das rotas protegidas (a checagem definitiva fica no servidor e na RLS).
  */
 import type { NextRequest } from "next/server";
 

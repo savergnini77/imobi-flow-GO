@@ -10,8 +10,15 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:supabase": "node --env-file=.env.local scripts/check-supabase.mjs",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:start": "npx supabase start",
+    "db:stop": "npx supabase stop",
+    "db:reset": "npx supabase db reset",
+    "db:test": "npx supabase test db",
+    "db:types": "npx supabase gen types typescript --local > src/types/database.ts",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
