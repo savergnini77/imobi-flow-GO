@@ -7,7 +7,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set search_path = public, extensions;
 
-select plan(39);
+select plan(41);
 
 -- -----------------------------------------------------------------------------
 -- Auxiliares: criar usuário de teste e agir como ele
@@ -204,6 +204,10 @@ select pg_temp.act_as_postgres();
 set local role anon;
 select throws_ok($$ select count(*) from public.companies $$, '42501', null,
   'anon não acessa companies');
+select throws_ok($$ select public.provision_company('Invasora') $$, '42501', null,
+  'anon não executa RPCs');
+select throws_ok($$ select public.protect_last_owner() $$, '42501', null,
+  'funções de gatilho não são expostas');
 
 select * from finish();
 rollback;
