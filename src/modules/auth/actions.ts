@@ -5,11 +5,12 @@
 // e, quando faz sentido, verifica a sessão.
 //
 // Estas ações NÃO redirecionam nem renderizam nada: retornam um ActionResult.
-// A navegação será feita pelas telas, em subetapa futura.
+// A navegação é feita pelas telas.
 
 import { headers } from "next/headers";
 
 import { createClient } from "@/lib/supabase/server";
+import { safeNext } from "@/lib/utils/safe-next";
 import {
   type ActionResult,
   failFields,
@@ -38,6 +39,7 @@ async function appOrigin(): Promise<string> {
 
 export async function signUp(
   input: unknown,
+  next?: unknown,
 ): Promise<ActionResult<{ needsEmailConfirmation: boolean }>> {
   const parsed = signUpSchema.safeParse(input);
   if (!parsed.success) {
@@ -53,7 +55,9 @@ export async function signUp(
     password,
     options: {
       data: fullName ? { full_name: fullName } : undefined,
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: `${origin}/auth/callback?next=${encodeURIComponent(
+        safeNext(typeof next === "string" ? next : null),
+      )}`,
     },
   });
 
