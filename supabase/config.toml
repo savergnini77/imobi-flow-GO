@@ -24,7 +24,7 @@ port = 54323
 
 # E-mails locais (confirmação de cadastro, recuperação de senha) caem no
 # Mailpit: http://localhost:54324
-[inbucket]
+[local_smtp]
 enabled = true
 port = 54324
 
@@ -43,6 +43,6 @@ enable_signup = true
 minimum_password_length = 8
 
 [auth.email]
-enable_signup = true
+enabled = true
 enable_confirmations = true
 double_confirm_changes = true
